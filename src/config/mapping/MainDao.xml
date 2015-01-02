@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mpgl.main.dao.MainDao">
+	
+	<sql id="limit">
+		limit #{pageIndex},#{pageSize}
+	</sql>
+
+	<select id="login" parameterType="com.mpgl.vo.Form" resultType="com.mpgl.vo.UserVo">
+		SELECT 
+			* 
+		FROM
+			t_user_info 
+		WHERE 1=1 
+			AND username = #{username}
+			AND password = #{password}
+			AND isLock = '0'
+	</select>
+	
+	<update id="updateUserPassword" parameterType="Map" >
+		UPDATE 
+			t_user_info
+		SET
+			password=#{password}
+		WHERE 
+			id = #{id}
+	</update>
+	
+	<select id="queryRoleByUser" parameterType="com.mpgl.vo.UserVo" resultType="com.mpgl.vo.RoleVo">
+		SELECT
+			t1.*
+		FROM 
+			t_role_info t1,
+			t_user_info t2
+		WHERE 1=1 
+			AND t1.id = t2.role_id
+			AND t2.id = #{id}
+	</select>
+	
+	<select id="queryMenuByRole" parameterType="com.mpgl.vo.RoleVo" resultType="com.mpgl.vo.MenuVo">
+		SELECT t3.id,t3.name
+		FROM 
+			t_role_submenu_rec t1, t_submenu_info t2,t_menu_info t3 
+		WHERE t1.submenu_id = t2.id AND t3.id=t2.menu_id AND t1.role_id = #{id}
+		GROUP BY t3.id,t3.name
+		ORDER BY t3.id 
+	</select>
+	
+	<select id="querySubMenuByMenu" parameterType="Map" resultType="com.mpgl.vo.SubMenuVo">
+		SELECT
+			t1.*
+		FROM
+			t_submenu_info t1,
+			t_role_submenu_rec t2
+		WHERE 1=1
+			AND t2.submenu_id = t1.id
+			AND t2.role_id = #{role_id}
+			AND t1.menu_id = #{menu_id}
+		ORDER BY order_num
+	</select>
+	
+	<select id="checkUserName" parameterType="com.mpgl.vo.UserVo" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM t_user_info where username = #{username}
+	</select>
+	
+	<select id="queryUserListBySingle" parameterType="com.mpgl.vo.Form" resultType="Map">
+		SELECT t1.*,t2.id AS role_id,t2.name AS role_name FROM t_user_info t1,t_role_info t2
+		WHERE 1=1
+			AND t1.role_id = t2.id
+			<if test="username != null and username != ''">
+				AND t1.username LIKE CONCAT('%',#{username},'%') 
+			</if>
+			<if test="role_id != null and role_id != ''">
+				AND t1.role_id = #{role_id}
+			</if>
+			<if test="user_id != null and user_id != ''">
+				AND t1.id = #{user_id}
+			</if>
+			<if test="isLock != null and isLock != ''">
+				AND t1.isLock = #{isLock}
+			</if>
+			<if test="name != null and name != ''">
+				AND t1.name LIKE CONCAT('%', #{name}, '%')
+			</if>
+		ORDER BY t1.id DESC
+	</select>
+	
+	<select id="queryUserList" parameterType="com.mpgl.vo.Form" resultType="Map">
+		SELECT t1.*,t2.id AS role_id,t2.name AS role_name FROM t_user_info t1,t_role_info t2
+		WHERE 1=1
+			AND t1.role_id = t2.id
+			<if test="username != null and username != ''">
+				AND t1.username LIKE CONCAT('%',#{username},'%') 
+			</if>
+			<if test="role_id != null and role_id != ''">
+				AND t1.role_id = #{role_id}
+			</if>
+			<if test="user_id != null and user_id != ''">
+				AND t1.id = #{user_id}
+			</if>
+			<if test="isLock != null and isLock != ''">
+				AND t1.isLock = #{isLock}
+			</if>
+			<if test="name != null and name != ''">
+				AND t1.name LIKE CONCAT('%', #{name}, '%')
+			</if>
+		ORDER BY t1.id DESC
+		<include refid="limit"/>
+	</select>
+	<select id="queryUserListCount" parameterType="com.mpgl.vo.Form" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM t_user_info t1,t_role_info t2
+		WHERE 1=1
+			AND t1.role_id = t2.id
+			<if test="username != null and username != ''">
+				AND t1.username LIKE CONCAT('%',#{username},'%') 
+			</if>
+			<if test="role_id != null and role_id != ''">
+				AND t1.role_id = #{role_id}
+			</if>
+			<if test="user_id != null and user_id != ''">
+				AND t1.id = #{user_id}
+			</if>
+			<if test="isLock != null and isLock != ''">
+				AND t1.isLock = #{isLock}
+			</if>
+			<if test="name != null and name != ''">
+				AND t1.name LIKE CONCAT('%', #{name}, '%')
+			</if>
+	</select>
+	
+	<select id="queryRoleList" resultType="Map">
+		SELECT *,id as valueField , name as textField FROM t_role_info
+	</select>
+	
+	<select id="queryDictionaryByKey" parameterType="com.mpgl.vo.Form" resultType="Map">
+		SELECT *,dictionary_value as valueField, dictionary_name as textField FROM t_dictionary_info WHERE 1=1 
+		<if test="dictionaryKey != null and dictionaryKey != ''">
+			AND dictionary_key = #{dictionaryKey}
+		</if>
+	</select>
+	
+	<insert id="addUser" parameterType="com.mpgl.vo.UserVo">
+		INSERT INTO t_user_info 
+		(
+		  username,
+		  password,
+		  role_id,
+		  create_time,
+		  isLock,
+		  name
+		) 
+		VALUES
+		(
+		  #{username},
+		  #{password},
+		  #{role_id},
+		  #{create_time},
+		  #{isLock},
+		  #{name}
+		)
+	</insert>
+	<update id="updateUser" parameterType="com.mpgl.vo.UserVo">
+		UPDATE 
+			t_user_info
+		SET 
+		  username = #{username},
+		  password = #{password},
+		  role_id = #{role_id},
+		  update_time = #{update_time},
+		  isLock = #{isLock},
+		  name = #{name}
+		WHERE id = #{id}
+	</update>
+	<delete id="deleteUser" parameterType="com.mpgl.vo.UserVo">
+		DELETE FROM t_user_info WHERE id = #{id}
+	</delete>
+	
+	<!-- 门牌管理 -->
+	<select id="queryHouseNumberListBySingle" parameterType="com.mpgl.vo.Form" resultType="Map">
+		SELECT * FROM t_house_number_info
+		WHERE 1=1
+		<if test="house_id != null and house_id != ''">
+			AND id = #{house_id}
+		</if>
+		<if test="road_name != null and road_name != ''">
+			AND road_name LIKE CONCAT('%', #{road_name}, '%')
+		</if>
+		<if test="property_name != null and property_name != ''">
+			AND property_name LIKE CONCAT('%', #{property_name}, '%')
+		</if>
+		<if test="now_user_name != null and now_user_name != ''">
+			AND now_user_name LIKE CONCAT('%', #{now_user_name}, '%')
+		</if>
+		<if test="now_house_num != null and now_house_num != ''">
+			AND now_house_num LIKE CONCAT('%', #{now_house_num}, '%')
+		</if>
+		<if test="house_num_position != null and house_num_position != ''">
+			AND house_num_position = #{house_num_position}
+		</if>
+		<if test="city != null and city != ''">
+			AND city LIKE CONCAT('%', #{city}, '%')
+		</if>
+		<if test="nature != null and nature != ''">
+			AND nature LIKE CONCAT('%', #{nature}, '%')
+		</if>
+		ORDER BY road_name
+	</select>
+	<select id="queryHouseNumberList" parameterType="com.mpgl.vo.Form" resultType="Map">
+		SELECT * FROM t_house_number_info
+		WHERE 1=1
+		<if test="house_id != null and house_id != ''">
+			AND id = #{house_id}
+		</if>
+		<if test="road_name != null and road_name != ''">
+			AND road_name LIKE CONCAT('%', #{road_name}, '%')
+		</if>
+		<if test="property_name != null and property_name != ''">
+			AND property_name LIKE CONCAT('%', #{property_name}, '%')
+		</if>
+		<if test="now_user_name != null and now_user_name != ''">
+			AND now_user_name LIKE CONCAT('%', #{now_user_name}, '%')
+		</if>
+		<if test="now_house_num != null and now_house_num != ''">
+			AND now_house_num LIKE CONCAT('%', #{now_house_num}, '%')
+		</if>
+		<if test="house_num_position != null and house_num_position != ''">
+			AND house_num_position = #{house_num_position}
+		</if>
+		<if test="city != null and city != ''">
+			AND city LIKE CONCAT('%', #{city}, '%')
+		</if>
+		<if test="nature != null and nature != ''">
+			AND nature LIKE CONCAT('%', #{nature}, '%')
+		</if>
+		ORDER BY road_name
+		<include refid="limit"/>
+	</select>
+	<select id="queryHouseNumberListCount" parameterType="com.mpgl.vo.Form" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM t_house_number_info 
+		WHERE 1=1
+		<if test="road_name != null and road_name != ''">
+			AND road_name LIKE CONCAT('%', #{road_name}, '%')
+		</if>
+		<if test="property_name != null and property_name != ''">
+			AND property_name LIKE CONCAT('%', #{property_name}, '%')
+		</if>
+		<if test="now_user_name != null and now_user_name != ''">
+			AND now_user_name LIKE CONCAT('%', #{now_user_name}, '%')
+		</if>
+		<if test="now_house_num != null and now_house_num != ''">
+			AND now_house_num LIKE CONCAT('%', #{now_house_num}, '%')
+		</if>
+		<if test="house_num_position != null and house_num_position != ''">
+			AND house_num_position LIKE CONCAT('%', #{house_num_position}, '%')
+		</if>
+		<if test="city != null and city != ''">
+			AND city LIKE CONCAT('%', #{city}, '%')
+		</if>
+		<if test="nature != null and nature != ''">
+			AND nature LIKE CONCAT('%', #{nature}, '%')
+		</if>
+	</select>
+	
+	<insert id="insertHouseNumber" parameterType="Map">
+		INSERT INTO t_house_number_info 
+			(
+			  now_house_num,
+			  old_house_num,
+			  road_name,
+			  road_level,
+			  road_direction,
+			  road_start_end,
+			  house_num_position,
+			  house_num_point,
+			  property_name,
+			  property_phone,
+			  now_user_name,
+			  now_user_phone,
+			  city,
+			  nature,
+			  mark,
+			  description
+			) 
+		VALUES
+			(
+			   #{now_house_num},
+			   #{old_house_num},
+			   #{road_name},
+			   #{road_level},
+			   #{road_direction},
+			   #{road_start_end},
+			   #{house_num_position},
+			   #{house_num_point},
+			   #{property_name},
+			   #{property_phone},
+			   #{now_user_name},
+			   #{now_user_phone},
+			   #{city},
+			   #{nature},
+			   #{mark},
+			   #{description}
+			)
+	</insert>
+	<insert id="addHouseNumber" parameterType="com.mpgl.vo.HouseVo">
+		INSERT INTO t_house_number_info 
+			(
+			  now_house_num,
+			  old_house_num,
+			  road_name,
+			  road_level,
+			  road_direction,
+			  road_start_end,
+			  house_num_position,
+			  house_num_point,
+			  property_name,
+			  property_phone,
+			  now_user_name,
+			  now_user_phone,
+			  city,
+			  nature,
+			  mark,
+			  description
+			) 
+		VALUES
+			(
+			   #{now_house_num},
+			   #{old_house_num},
+			   #{road_name},
+			   #{road_level},
+			   #{road_direction},
+			   #{road_start_end},
+			   #{house_num_position},
+			   #{house_num_point},
+			   #{property_name},
+			   #{property_phone},
+			   #{now_user_name},
+			   #{now_user_phone},
+			   #{city},
+			   #{nature},
+			   #{mark},
+			   #{description}
+			)
+	</insert>
+	
+	<update id="updateHouseNumber" parameterType="com.mpgl.vo.HouseVo">
+		UPDATE 
+  			t_house_number_info 
+		SET
+		  now_house_num = #{now_house_num},
+		  old_house_num = #{old_house_num},
+		  road_name = #{road_name},
+		  road_level = #{road_level},
+		  road_direction = #{road_direction},
+		  road_start_end = #{road_start_end},
+		  house_num_position = #{house_num_position},
+		  house_num_point = #{house_num_point},
+		  property_name = #{property_name},
+		  property_phone = #{property_phone},
+		  now_user_name = #{now_user_name},
+		  now_user_phone = #{now_user_phone},
+		  city = #{city},
+		  nature = #{nature},
+		  mark = #{mark},
+		  description = #{description}
+		WHERE id = #{id};
+	</update>
+	<delete id="deleteHouseNumber" parameterType="com.mpgl.vo.HouseVo">
+		DELETE FROM t_house_number_info  WHERE id = #{id}
+	</delete>
+	
+	
+</mapper> 

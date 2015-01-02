@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Mon Dec 02 13:44:56 CST 2013
+onejar.license.required=false
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=C\:\\Users\\Administrator\\Desktop\\mpgl-client_fat.jar
+manifest.mergeall=true
+manifest.mainclass=com.mpgl.main.gui.LoginGUI
+manifest.file=<createnew>
+jarname.isextern=true
+onejar.expand=
+excludes=
+includes=

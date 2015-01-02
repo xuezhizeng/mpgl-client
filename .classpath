@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.lib.spring3.MYECLIPSE_SPRING30_CORE"/>
+	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.lib.spring3.MYECLIPSE_SPRING30_Persistence_JDBC"/>
+	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.lib.spring3.MYECLIPSE_SPRING30_Persistence_CORE"/>
+	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.lib.spring3.MYECLIPSE_SPRING30_AOP"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/lib/mybatis-3.0.6.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/lib/mybatis-spring-1.0.1.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/lib/poi-3.10-beta2-20130904.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/lib/poi-examples-3.10-beta2-20130904.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/lib/poi-excelant-3.10-beta2-20130904.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/lib/poi-ooxml-3.10-beta2-20130904.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/lib/poi-ooxml-schemas-3.10-beta2-20130904.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/lib/poi-scratchpad-3.10-beta2-20130904.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/lib/mysql-connector-java-5.1.8-bin.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/lib/l2fprod-common-all.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/lib/itextpdf-5.4.4.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/lib/itext-pdfa-5.4.4.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/lib/itext-xtra-5.4.4.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/stylelib/a03-laf-3.0.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/stylelib/JTattoo.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/stylelib/JTattooDemo.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/stylelib/liquidlnf.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/stylelib/nimrodlf-1.0b.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/stylelib/OfficeLnFs_2.7.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/stylelib/PgsLookAndFeel-jide.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/stylelib/quaqua.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/stylelib/seaglasslookandfeel-0.2.jar"/>
+	<classpathentry kind="lib" path="F:/WorkSpace/mpgl-client/stylelib/substance.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

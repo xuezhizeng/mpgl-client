@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-3.0.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+         http://www.springframework.org/schema/aop 
+         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<bean id="LoginGUI" class="com.mpgl.main.gui.LoginGUI" scope="prototype">
+		<property name="mainService" ref="MainService">
+		</property>
+	</bean>
+
+	<bean id="MainGUI" class="com.mpgl.main.gui.MainGUI" scope="prototype">
+		<property name="mainService" ref="MainService"></property>
+		<property name="editPasswordDialog" ref="EditPasswordDialog"></property>
+		<property name="systemSettingDialog" ref="SystemSettingDialog"></property>
+	</bean>
+
+	<bean id="EditPasswordDialog" class="com.mpgl.main.gui.EditPasswordDialog"
+		scope="prototype">
+		<property name="mainService" ref="MainService"></property>
+	</bean>
+
+	<bean id="SystemSettingDialog" class="com.mpgl.main.gui.SystemSettingDialog"
+		scope="prototype">
+		<property name="mainService" ref="MainService"></property>
+	</bean>
+
+	<bean id="HouseNumberManagerPanel" class="com.mpgl.main.gui.HouseNumberManagerPanel"
+		scope="prototype">
+		<property name="mainService" ref="MainService"></property>
+		<property name="addDialog" ref="AddHouseDialog"></property>
+		<property name="editDialog" ref="EditHouseDialog"></property>
+	</bean>
+
+	<bean id="AddHouseDialog" class="com.mpgl.main.gui.AddHouseDialog"
+		scope="prototype">
+		<property name="mainService" ref="MainService"></property>
+	</bean>
+
+	<bean id="EditHouseDialog" class="com.mpgl.main.gui.EditHouseDialog"
+		scope="prototype">
+		<property name="mainService" ref="MainService"></property>
+	</bean>
+
+	<bean id="ImportHouseNumberPanel" class="com.mpgl.main.gui.ImportHouseNumberPanel"
+		scope="prototype">
+		<property name="mainService" ref="MainService"></property>
+	</bean>
+
+	<bean id="UserManagerPanel" class="com.mpgl.main.gui.UserManagerPanel"
+		scope="prototype">
+		<property name="mainService" ref="MainService"></property>
+		<property name="addDialog" ref="AddUserDialog"></property>
+		<property name="editDialog" ref="EditUserDialog"></property>
+	</bean>
+
+	<bean id="AddUserDialog" class="com.mpgl.main.gui.AddUserDialog"
+		scope="prototype">
+		<property name="mainService" ref="MainService"></property>
+	</bean>
+
+	<bean id="EditUserDialog" class="com.mpgl.main.gui.EditUserDialog"
+		scope="prototype">
+		<property name="mainService" ref="MainService"></property>
+	</bean>
+
+	<bean id="MainService" class="com.mpgl.main.service.impl.MainServiceImpl">
+		<property name="mainDao" ref="MainDao"></property>
+	</bean>
+
+	<bean id="MainDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sessionFactory"></property>
+		<property name="mapperInterface" value="com.mpgl.main.dao.MainDao"></property>
+	</bean>
+</beans>
